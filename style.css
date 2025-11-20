@@ -1,82 +1,200 @@
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background: radial-gradient(circle at top, #3e4250, #1b1e24);
+  margin: 0;
+  padding: 15px;
+  color: #f4f4f4;
+}
 
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: helvetica, arial, sans-serif;
-    margin: 25px;
-  }
-  
-  main {
-    display:block;
-    height:175px;
-  }
-  
-  header {
-    border-bottom: 1px solid black;
-  }
-  
-  h1 {
-    font-weight: bold;
-    color: #000;
-  }
-  
-  .bold {
-    font-weight: bold;
-  }
-  
-  p {
-    max-width: 600px;
-  }
-  
-  
-  li {
-    margin-bottom: 5px;
-  }
-  
-  footer {
-    padding-top: 25px;
-    border-top: 1px solid black;
-  }
-  
-  footer a {
-    float:left;
-    margin:5px;
-  }
-  
-  .pet-image {
-    height:250px;
-  }
-  
-  .dashboard div {
-    display:block;
-  }
-  
-  .pet-image-container {
-    float:left;
-    padding:10px;
-  }
-  
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* ---------------------------
+   Glassmorphism Cards
+--------------------------- */
+.glass {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+}
+
+/* ---------------------------
+   Pet Card
+--------------------------- */
+.pet-card {
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.pixel-frame {
+  height: 260px;
+  border-radius: 8px;
+  image-rendering: pixelated;
+  padding: 6px;
+  border: 6px solid #2f2f2f;
+
+  background: repeating-linear-gradient(
+    45deg,
+    #1c1c1c,
+    #1c1c1c 10px,
+    #2a2a2a 10px,
+    #2a2a2a 20px
+  );
+
+  transition: 0.3s;
+}
+
+.pixel-frame:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 25px rgba(255, 229, 110, 1),
+    0 0 45px rgba(255, 215, 80, 0.75);
+}
+
+@keyframes idleSway {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.pet-image {
+  animation: idleSway 3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.pet-image.animated {
+  animation: bounce 0.35s ease;
+}
+
+/* ---------------------------
+   Dashboard
+--------------------------- */
+.dashboard {
+  padding: 25px;
+  width: 400px;
+  margin: 0 auto;
+  animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+  font-size: 1.15rem;
+}
+
+.label {
+  font-weight: 600;
+}
+
+/* ---------------------------
+   Animated Stats
+--------------------------- */
+.bar-container {
+  margin: 15px 0;
+  font-size: 0.95rem;
+}
+
+.bar {
+  width: 100%;
+  height: 16px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.4s ease;
+}
+
+.hunger-fill {
+  background: linear-gradient(to right, #ff6666, #ff3333);
+}
+
+.energy-fill {
+  background: linear-gradient(to right, #66ffcc, #33ddaa);
+}
+
+/* ---------------------------
+   Floating Messages
+--------------------------- */
+.pet-message {
+  margin-top: 15px;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(255,255,255,0.22);
+  padding: 12px;
+  border-radius: 12px;
+  display: none;
+  animation: floatUp 0.4s ease-out;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0px); opacity: 1; }
+}
+
+/* ---------------------------
+   Buttons
+--------------------------- */
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.glass-btn {
+  flex: 1;
+  padding: 12px 0;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(6px);
+  color: white;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.glass-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(255, 220, 120, 0.7);
+}
+
+@media (max-width: 480px) {
   .dashboard {
-    float:left;
-    padding:20px;
+    width: 90%;
+    padding: 20px;
   }
-  
+
   .button-container {
-    margin-top:20px;
+    flex-direction: column;
   }
-  
-  .button-container button {
-    width: 100px;
-      margin-right: 10px;
-      text-align: center;
-      display: inline-block;
-      float: left;
-    font-size:15px;
-    background-color: #1e2835;
-    border-color: #404853;
-    cursor:pointer;
-    background-image: linear-gradient(to bottom,rgba(246,246,246,.1)0%,rgba(30,40,53,0)66%);
-    color: #fafafa;
-  }
+}

@@ -1,48 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Your Giga Pet</title>
-    <meta name="description" content="A cool thing made with Glitch">
-    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Giga Pet</title>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="script.js" defer></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Script -->
+    <script src="script.js" defer></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   </head>
+
   <body>
+
     <header>
-      <h1>
-        This is your Giga Pet
-      </h1>
+      <h1>GigaPet</h1>
     </header>
 
     <main>
-      <section class="pet-image-container">
-         <!-- Replace pet image with your own pet image -->
-        <img class="pet-image" src="https://cdn.glitch.com/3aa98e05-3216-497c-a251-210ae4713a83%2Fhound.jpg?1541715339220">
+
+      <!-- Pet Image -->
+      <section class="pet-card glass">
+        <img class="pet-image pixel-frame" src="images/nailong.jpeg">
       </section>
-      <section class="dashboard">
-        <div>Name: <strong><span class="name"></span></strong></div>
-        <div>Weight: <strong><span class="weight"></span> pounds</strong></div>
-        <div>Happiness: <strong><span class="happiness"></span> tail wags (per min)</strong></div>
-        <div class="button-container">
-          <button class="treat-button">
-            Treat
-          </button>
-          <button class="play-button">
-            Play
-          </button>
-          <button class="exercise-button">
-            Exercise
-          </button>
+
+      <!-- Dashboard -->
+      <section class="dashboard glass">
+
+        <div class="stat-row">
+          <i class="fa-solid fa-signature"></i>
+          <span class="label">Name:</span>
+          <span class="value name"></span>
         </div>
+
+        <div class="stat-row">
+          <i class="fa-solid fa-weight-scale"></i>
+          <span class="label">Weight:</span>
+          <span class="value weight"></span> lbs
+        </div>
+
+        <div class="stat-row">
+          <i class="fa-solid fa-face-smile"></i>
+          <span class="label">Happiness:</span>
+          <span class="value happiness"></span>
+        </div>
+
+        <div class="stat-row">
+          <i class="fa-solid fa-star"></i>
+          <span class="label">Level:</span>
+          <span class="value level"></span>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="bar-container">
+          <span>Hunger</span>
+          <div class="bar hunger-bar"><div class="fill hunger-fill"></div></div>
+        </div>
+
+        <div class="bar-container">
+          <span>Energy</span>
+          <div class="bar energy-bar"><div class="fill energy-fill"></div></div>
+        </div>
+
+        <!-- Floating Message -->
+        <div class="pet-message"></div>
+
+        <!-- Buttons -->
+        <div class="button-container">
+          <button class="treat-button glass-btn">Treat</button>
+          <button class="play-button glass-btn">Play</button>
+          <button class="exercise-button glass-btn">Exercise</button>
+          <button class="nap-button glass-btn">Nap</button>
+        </div>
+
       </section>
+
     </main>
 
-    <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
   </body>
 </html>
