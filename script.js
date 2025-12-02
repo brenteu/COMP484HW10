@@ -1,151 +1,161 @@
-/* ============================================================================
-   CHROME DEVTOOLS DEBUGGING GUIDE (JavaScript + DOM)
-   --------------------------------------------------------------------------
-   PART 1 — DEBUGGING JAVASCRIPT (Sources Panel)
-   --------------------------------------------------------------------------
+/*
+   Chrome DevTools debugging guide
+   -----------------------------------------------
 
-   1) Reproduce the bug
-      - Open index.html in Chrome.
-      - Open DevTools (F12 or Ctrl+Shift+I / Cmd+Opt+I).
-      - Click Treat / Play / Exercise / Nap repeatedly.
-      - Observe incorrect stat changes or UI behavior.
+   Part 1: Debugging JavaScript (Sources panel)
 
-   2) Get familiar with the Sources panel UI
-      - Open DevTools → Sources tab.
-      - Left side = Page file tree → click script.js.
-      - Middle = code editor.
-      - Right = Debugger (Breakpoints, Scope, Call Stack, Watch, etc.).
+   1. Reproducing a bug (based on the example included below)
 
-   3) Pause the code
-      Option A: Event Listener Breakpoint
-        - In the Debugger panel → Event Listener Breakpoints → Mouse → check "click".
-        - Now ANY click instantly pauses inside the click handler.
-      Option B: Line-of-code breakpoint (see #5).
+      There is a commented-out example in the clickedExerciseButton function.
+      The mistake would cause the hunger bar to increase instead of decrease
+      whenever the Exercise button is pressed. This is something a developer
+      might accidentally do by changing -= to +=.
 
-   4) Step through code
-      - When paused, use:
-          Step Into   → follow inside called functions
-          Step Over   → run line without entering functions
-          Step Out    → finish function and return
-      - Lets you watch how pet_info changes step-by-step.
+      To reproduce this hypothetical bug:
+      - Open index.html in Chrome
+      - Open DevTools (F12)
+      - Click the Exercise button several times
+      - You would see the hunger bar going up instead of down
+      - The behavior would be consistent each time
 
-   5) Set a line-of-code breakpoint
-      - In script.js, click the LEFT gutter next to:
-            $(".hunger-fill").css("width", pet_info.hunger + "%");
-      - Chrome pauses before applying bar width.
-      - Check hunger/energy BEFORE DOM updates.
+      The bug is not active, but the example shows how you would debug it.
 
-   6) Check variable values — 3 methods
-      Method 1: Scope
-        - Shows local + global vars while paused.
-        - Expand pet_info to inspect live values.
-      
-      Method 2: Watch Expressions
-        - Add:
-             pet_info.hunger
-             pet_info.energy
-             pet_info.level
-        - Updates automatically as you step through code.
+   2. Getting familiar with the Sources panel
 
-      Method 3: Console (while paused)
-        - Press Esc to open console drawer.
-        - Type:
-             pet_info
-             pet_info.hunger
-             pet_info.energy
-        - You can run test calculations here safely.
+      - Open the Sources tab in DevTools
+      - On the left is the file tree; open script.js
+      - The middle area shows the code
+      - The panel on the right shows breakpoints, scope, call stack, and watch values
 
-   7) Apply a fix
-      - While paused, edit the code in Sources panel directly.
-      - Press Ctrl+S / Cmd+S to apply the temp patch.
-      - Resume execution → test → then apply the same fix in your real file.
+   3. Pausing the code
 
-   --------------------------------------------------------------------------
-   PART 2 — DOM INTERACTION (Elements Panel)
-   --------------------------------------------------------------------------
+      Option A: Event listener breakpoint
+        - In the Debugger panel, expand “Event Listener Breakpoints”
+        - Under “Mouse”, check “click”
+        - Any click on the page will pause the code inside the click handler
 
-   A) View DOM nodes
-      1) Inspect a node
-         - Right-click the pet image or text → Inspect.
-         - Elements panel highlights actual DOM element.
+      Option B: Line-of-code breakpoint
+        - Explained below in step 5
 
-      2) Keyboard navigation
-         - Up/Down → move siblings
-         - Left → collapse / go to parent
-         - Right → expand children
+   4. Stepping through code
 
-      3) Scroll into view
-         - Right-click → "Scroll into view" to jump the page to that element.
+      When the execution is paused, you can:
+      - Step into: go inside functions being called
+      - Step over: run the current line without entering functions
+      - Step out: finish the current function and return to the caller
 
-      4) Show rulers on hover
-         - Command menu → "Show rulers on hover".
-         - Helps visualize spacing on .dashboard, .pet-card, etc.
+      This helps you follow exactly how pet_info changes.
 
-      5) Search DOM
-         - Ctrl+F / Cmd+F inside Elements.
-         - Try:
-             .pet-card
-             .hunger-fill
-             "GigaPet"
+   5. Setting a line-of-code breakpoint
 
-   B) Edit the DOM
-      1) Edit text
-         - Double-click <h1>GigaPet</h1> and rename it.
+      You can click in the left margin next to any line, for example:
+          $(".hunger-fill").css("width", pet_info.hunger + "%");
+      Chrome will pause right before the bar updates, letting you inspect variables.
 
-      2) Edit attributes
-         - Example: change <img src>, add title="Nailong".
+   6. Checking variable values (three ways)
 
-      3) Edit node type
-         - Double-click tag name to change <span> → <strong>.
+      Method 1: Scope panel
+        Shows all in-scope variables when paused, including pet_info.
 
-      4) Edit as HTML
-         - Right-click element → Edit as HTML.
-         - Temporary only—changes the DOM, not your actual file.
+      Method 2: Watch expressions
+        You can watch values like:
+          pet_info.hunger
+          pet_info.energy
+          pet_info.level
+        These update live as you step through the code.
 
-      5) Duplicate nodes
-         - Right-click a .stat-row → Duplicate element.
+      Method 3: Console
+        Press Esc to open the console drawer while paused.
+        You can type things like:
+          pet_info
+          pet_info.hunger
+        This is useful for testing calculations during debugging.
 
-      6) Capture node screenshot
-         - Right-click an element → Capture node screenshot.
+   7. Applying a fix
 
-      7) Reorder nodes
-         - Drag DOM nodes to rearrange the layout dynamically.
+      Once you identify the incorrect line (for example, hunger increasing instead of decreasing),
+      you can temporarily fix it directly in the Sources panel, save, and test the result.
+      Once confirmed, apply the same fix in your real file.
 
-      8) Force element state
-         - Right-click → Force state → :hover, :active, etc.
 
-      9) Hide nodes
-         - Press H to hide selected element (toggle visibility).
+   Part 2: Working with the DOM (Elements panel)
 
-      10) Delete & undo
-         - Press Delete to remove an element.
-         - Ctrl+Z / Cmd+Z restores it.
+   A. Viewing elements
 
-   C) Access nodes in the Console
-      1) $0
-         - Selected element in Elements = $0.
-         - Example: select .hunger-fill → console: $0.style.border = "2px solid red";
+      1. Inspecting
+         Right-click any part of the page (like the pet image or a stat) and choose “Inspect”.
+         DevTools will highlight the corresponding DOM element.
 
-      2) Store as global
-         - Right-click → "Store as global variable" (temp1, temp2, ...).
+      2. Navigating with the keyboard
+         - Up/Down to move between elements
+         - Left to collapse or move to a parent
+         - Right to expand children
 
-      3) Copy JS path
-         - Right-click element → Copy → Copy JS path.
+      3. Scrolling into view
+         Right-click an element in the DOM tree and select “Scroll into view”.
 
-   D) Break on DOM changes
-      - Right-click a DOM node → Break on:
-            • Subtree modifications
-            • Attribute modifications
-            • Node removal
-      - Example: break on .hunger-fill to detect when width changes.
+      4. Showing rulers on hover
+         Enable rulers to help visualize spacing and layout.
 
-   E) HTML vs DOM reminder
-      - index.html is static on disk.
-      - The DOM is dynamic and changed by script.js.
-      - updatePetInfoInHtml() modifies DOM values & bar styles but NOT the HTML file.
+      5. Searching the DOM
+         Press Ctrl+F and search for selectors like:
+           .pet-card
+           .hunger-fill
 
-   ============================================================================
+
+   B. Editing the DOM
+
+      1. Editing text
+         Double-click text inside the DOM tree to change it.
+
+      2. Editing attributes
+         You can modify things like <img src> or add attributes such as title="Nailong".
+
+      3. Changing element type
+         Double-click a tag name to change the element, for example <span> to <strong>.
+
+      4. Editing as HTML
+         Right-click any element and choose “Edit as HTML”.
+
+      5. Duplicating elements
+         Useful for quickly testing layout changes.
+
+      6. Capturing a node screenshot
+
+      7. Reordering elements by dragging them in the tree
+
+      8. Forcing states like :hover or :active
+
+      9. Hiding elements by pressing H
+
+      10. Deleting and undoing elements (Delete, then Ctrl+Z)
+
+
+   C. Accessing DOM elements in the console
+
+      1. Using $0
+         The last selected element in Elements appears as $0 in the console.
+
+      2. Storing as a global variable
+         You can store an inspected element as temp1, temp2, etc.
+
+      3. Copying the JS path
+         Right-click → Copy → Copy JS path
+
+
+   D. Breaking on DOM changes
+
+      You can set DevTools to pause whenever a specific element changes.
+      For example, right-click the hunger bar element and choose Break on → attribute modifications.
+      When the bar width changes, Chrome pauses and shows what caused it.
+
+
+   E. HTML vs DOM
+
+      index.html on disk never changes while the page runs.
+      script.js updates the live DOM only (for example changing text or bar widths).
 */
+
 
 $(function () {
   checkAndUpdatePetInfoInHtml();
@@ -196,6 +206,21 @@ function clickedPlayButton() {
 function clickedExerciseButton() {
   pet_info.happiness -= 1;
   pet_info.weight -= 2;
+  /* ---------------------------------------------------------
+     Example Bug
+
+     Instead of decreasing hunger during exercise:
+
+         pet_info.hunger += 10;
+
+     This makes the hunger bar INCREASE every time
+     the Exercise button is pressed.
+
+     To debug:
+       - Set a breakpoint on the hunger update line
+       - Click “Exercise”
+       - Observe hunger going UP instead of DOWN
+     --------------------------------------------------------- */
   pet_info.hunger -= 10;
   pet_info.energy -= 15;
 
